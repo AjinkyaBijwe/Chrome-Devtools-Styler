@@ -1,0 +1,163 @@
+.dark-theme {
+	background: #505050;
+}
+
+/* Track */
+.dark-theme ::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Handle */
+.dark-theme ::-webkit-scrollbar-thumb {
+	background: #9b9b9b;
+	border-radius: 0px;
+	cursor: pointer;
+}
+
+/* Dark Theme Start */
+.dark-theme .CodeMirror {
+	background: #272822;
+	color: #f8f8f2;
+}
+
+.dark-theme .CodeMirror-selected {
+	background: #49483E;
+}
+
+.dark-theme .CodeMirror-line::selection,
+.dark-theme .CodeMirror-line>span::selection,
+.dark-theme .CodeMirror-line>span>span::selection {
+	background: rgba(73, 72, 62, .99);
+}
+
+.dark-theme .CodeMirror-line::-moz-selection,
+.dark-theme .CodeMirror-line>span::-moz-selection,
+.dark-theme .CodeMirror-line>span>span::-moz-selection {
+	background: rgba(73, 72, 62, .99);
+}
+
+.dark-theme .CodeMirror-gutters {
+	background: #3c3c3c;
+	border-right: 0px;
+}
+
+.dark-theme .CodeMirror-guttermarker {
+	color: white;
+}
+
+.dark-theme .CodeMirror-guttermarker-subtle {
+	color: #ababab;
+}
+
+.dark-theme .CodeMirror-linenumber {
+	color: #ababab;
+}
+
+.dark-theme .CodeMirror-cursor {
+	border-left: 1px solid #f8f8f0;
+}
+
+.dark-theme .cm-comment {
+	color: #75715e;
+}
+
+.dark-theme .cm-atom {
+	color: #b197ff;
+}
+
+.dark-theme .cm-number {
+	color: #b197ff;
+}
+
+.dark-theme .cm-comment.cm-attribute {
+	color: #97b757;
+}
+
+.dark-theme .cm-comment.cm-def {
+	color: #bc9262;
+}
+
+.dark-theme .cm-comment.cm-tag {
+	color: #bc6283;
+}
+
+.dark-theme .cm-comment.cm-type {
+	color: #5998a6;
+}
+
+.dark-theme .cm-property,
+.dark-theme .cm-attribute {
+	color: #64e1ff !important;
+}
+
+.dark-theme .cm-qualifier {
+	color: #a6e22e;
+}
+
+.dark-theme .cm-keyword {
+	color: #f92672;
+}
+
+.dark-theme .cm-builtin {
+	color: #66d9ef;
+
+}
+
+.dark-theme .cm-string {
+	color: #e6db74;
+
+}
+
+.dark-theme .cm-variable {
+	color: #f8f8f2;
+
+}
+
+.dark-theme .cm-variable-2 {
+	color: #ffffff;
+
+}
+
+.dark-theme .cm-variable-3,
+.dark-theme .cm-type {
+	color: #66d9ef;
+
+}
+
+.dark-theme .cm-def {
+	color: #fd971f;
+
+}
+
+.dark-theme .cm-bracket {
+	color: #f8f8f2;
+}
+
+.dark-theme .cm-tag {
+	color: #ff327c;
+}
+
+.dark-theme .cm-header {
+	color: #ae81ff;
+}
+
+.dark-theme .cm-link {
+	color: #ae81ff;
+}
+
+.dark-theme .cm-error {
+	background: #f92672;
+	color: #f8f8f0;
+}
+
+.dark-theme .CodeMirror-activeline-background {
+	background: #373831;
+
+}
+
+.dark-theme .CodeMirror-matchingbracket {
+	text-decoration: underline;
+	color: white;
+}
+
+/* Dark Theme End */
