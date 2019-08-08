@@ -12,6 +12,10 @@ body {
     right: 15px;
 }
 
+.wrapper {
+    padding: 10px 15px;
+}
+
 .table {
 	width: 100%;
 	margin-bottom: 1rem;

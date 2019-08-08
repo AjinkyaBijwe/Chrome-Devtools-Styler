@@ -1,7 +1,7 @@
-<div>
-    <mat-toolbar color="primary" class="title mat-elevation-z6">
-        {{title}}
-    </mat-toolbar>
-    <div class="wrapper">
-    </div>
+<mat-toolbar color="primary" class="title mat-elevation-z6">
+    {{title}}
+    <button mat-button (click)="setChromeStorage()">Save</button>
+</mat-toolbar>
+<div class="wrapper">
+    <input type="text" placeholder="Font Name/URL" [(ngModel)]="fontFamily" />
 </div>
