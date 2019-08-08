@@ -1,0 +1,15 @@
+.dark-theme {
+	background: #505050;
+}
+
+/* Track */
+.dark-theme ::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Handle */
+.dark-theme ::-webkit-scrollbar-thumb {
+	background: #9b9b9b;
+	border-radius: 0px;
+	cursor: pointer;
+}

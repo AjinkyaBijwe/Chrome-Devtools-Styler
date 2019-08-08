@@ -9,7 +9,13 @@
     ],
     "web_accessible_resources": [
         "assets/css/*",
-        "assets/fonts/*"
+        "assets/fonts/*",
+        "assets/img/*"
     ],
+    "icons": {
+        "16": "assets/img/icon.png",
+		"48": "assets/img/icon.png",
+        "128": "assets/img/icon.png"
+    },
     "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }
