@@ -1,58 +1,55 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="devtools">
 
 <head>
     <meta charset="utf-8">
     <title>Chrome Devtools Styler</title>
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="assets/css/main.css" type="text/css">
     <link rel="stylesheet" href="assets/css/dark.css" type="text/css">
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css">
 </head>
 
-<body>
+<body ng-controller="devtools-controller">
     <nav class="navbar">
         <a class="navbar-brand">Devtools Styler</a>
-        <button id="save" class="header-button btn btn-primary">Save</button>
+        <button id="save" class="header-button btn btn-primary" ng-click="setStorage()">Save</button>
     </nav>
     <div class="wrapper">
         <div class="card">
             <div class="form-group">
-                <label class="form-label">Code Font Name/URL</label>
-                <input id="code-font" class="form-input" type="text" placeholder="Code Font Name/URL">
+                <label class="form-label">Code Font Name</label>
+                <input class="form-input" type="text" placeholder="Code Font Name" ng-model="fontFamily">
             </div>
             <div class="form-group">
-                <label class="form-label">Font Size : <span id="font-size-val"></span></label>
-                <input id="font-size" type="range" class="custom-range" min="10" max="50" step="1">
+                <label class="form-label">Font Size : {{fontSize}}px</label>
+                <input type="range" class="custom-range" min="10" max="50" step="1" ng-model="fontSize">
             </div>
             <div class="form-group">
-                <label class="form-label">Code Text Stroke Width Size : <span id="font-stroke-val"></span></label>
-                <input id="font-stroke-size" type="range" class="custom-range" min="0" max="2" step="0.1">
+                <label class="form-label">Code Text Stroke Width Size : {{textWidthSize}}px</label>
+                <input type="range" class="custom-range" min="0" max="2" step="0.1" ng-model="textWidthSize">
             </div>
             <div class="form-group">
                 <label class="form-label">Code Font Smoothing</label>
                 <div class="btn-group">
-                    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                        Action
+                    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+                        {{fontSmoothing}}
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item">Action</a>
-                        <a class="dropdown-item">Another action</a>
-                        <a class="dropdown-item">Something else here</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item">Separated link</a>
+                        <a class="dropdown-item" ng-repeat="item in fontSmoothingItems" 
+                        ng-click="setFontSmoothing(item)">{{item}}</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div id="save-message">Data Saved. Please Restart Browser to see Changes</div>
-    <script src="devtools.js"></script>
+    <div id="save-message">Data saved. Please restart browser to see the changes !</div>
     <script src="assets/js/jquery-3.4.1.min.js"></script>
+    <script src="assets/js/angular.min.js"></script>
     <script src="assets/js/popper.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
+    <script src="devtools.js"></script>
 </body>
 
 </html>

@@ -1,61 +1,71 @@
-(function(document) {
-    
-    this.fontSmoothingItems = ['none', 'subpixel-antialiased', 'antialiased', 'unset', 'auto', 'initial'];
+var app = angular.module('devtools', []);
+app.controller('devtools-controller', controller)
 
-    function loadDevtools() {
-		this.devtools = chrome.devtools.panels;
+controller.$inject = ['$scope'];
+
+function controller($scope) {
+    $scope.fontSmoothingItems = ['none', 'subpixel-antialiased', 'antialiased', 'unset', 'auto', 'initial'];
+
+    $scope.loadDevtools = () => {
+        $scope.devtools = chrome.devtools.panels;
         chrome.storage.sync.get(['fontFamily', 'fontSize', 'textWidthSize', 'fontSmoothing'], (items) => {
-            this.devtools.applyStyleSheet(setTemplate(items));
-			this.devtools.create('Devtool Styler', 'assets/img/pantone.png', 'index.html', () => {
+            $scope.devtools.applyStyleSheet($scope.setTemplate(items));
+            $scope.devtools.create('Devtool Styler', 'assets/img/pantone.png', 'index.html', () => {
                 $('#save-message').hide();
-				$('#code-font').val(items.fontFamily);
-				$('#font-size').val(items.fontSize);
-                $('#font-size-val')[0].innerHTML = items.fontSize + 'px'
-                $('#font-stroke-size').val(items.textWidthSize);
-                $('#font-stroke-val')[0].innerHTML = items.textWidthSize + 'px'
-                $('#save').click(() => {setStorage()});
-                $('#font-size, #font-stroke-size').change(() => {updateSlider()});
-			});
-		});
+                $scope.fontFamily = items.fontFamily ? items.fontFamily : '';
+                $scope.fontSize = items.fontSize ? parseInt(items.fontSize) : 12;
+                $scope.textWidthSize = items.textWidthSize ? parseFloat(items.textWidthSize) : 0;
+                $scope.fontSmoothing = items.fontSmoothing ? items.fontSmoothing : 'none';
+                setTimeout(() => {
+                    $scope.$apply();
+                });
+            });
+        });
     }
-	
-	function setStorage() {
+
+    $scope.setStorage = () => {
         $('#save-message').hide();
-		chrome.storage.sync.set({
-            fontFamily: $('#code-font').val(),
-            fontSize: $('#font-size').val(),
-            textWidthSize: $('#font-stroke-size').val()
-            //fontSmoothing: this.fontSmoothing
+        chrome.storage.sync.set({
+            fontFamily: $scope.fontFamily,
+            fontSize: $scope.fontSize,
+            textWidthSize: $scope.textWidthSize,
+            fontSmoothing: $scope.fontSmoothing
         }, () => {
-            clearTimeout(this.timeout);
+            clearTimeout($scope.timeout);
             $('#save-message').slideDown(300);
-            this.timeout = setTimeout(() => {
+            $scope.timeout = setTimeout(() => {
                 $('#save-message').slideUp(300);
             }, 3000);
         });
-	}
-	
-	function setTemplate(items){
-        return `:host-context(.platform-windows) .monospace, \
-        :host-context(.platform-windows) .source-code, \
-        .platform-windows .monospace, .platform-windows .source-code,
+    }
+
+    $scope.setFontSmoothing = (item) => {
+        $scope.fontSmoothing = item;
+    }
+
+    $scope.setTemplate = (items) => {
+        var styleSheet =  `:host-context(.platform-windows) .monospace, 
+        :host-context(.platform-windows) .source-code, 
+        .platform-windows .monospace, .platform-windows .source-code, 
         :host-context(.platform-mac) .monospace,
-        :host-context(.platform-mac) .source-code,
+        :host-context(.platform-mac) .source-code, 
         .platform-mac .monospace, .platform-mac .source-code,
-        :host-context(.platform-linux) .monospace, \
-        :host-context(.platform-linux) .source-code, \
-        .platform-linux .monospace, .platform-linux .source-code {
+        :host-context(.platform-linux) .monospace, 
+        :host-context(.platform-linux) .source-code, 
+        .platform-linux .monospace, .platform-linux .source-code, 
+        .source-code {
             font-family: ${items.fontFamily};
             font-size: ${items.fontSize}px !important;
             -webkit-text-stroke-width: ${items.textWidthSize}px;
             -webkit-font-smoothing: ${items.fontSmoothing}
+        }
+        
+        table {
+            font-family: ${items.fontFamily} !important;
         }`;
-    }
-    
-    function updateSlider() {
-        $('#font-size-val')[0].innerHTML = $('#font-size').val() + 'px';
-        $('#font-stroke-val')[0].innerHTML = $('#font-stroke-size').val() + 'px';
+
+        return styleSheet;
     }
 
-    document.addEventListener('DOMContentLoaded', loadDevtools);
-})(document);
+    document.addEventListener('DOMContentLoaded', $scope.loadDevtools());
+}
