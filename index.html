@@ -74,20 +74,21 @@
     <div id="save-message" style="display: none;">Data saved. Please restart browser to see the changes !</div>
     <div class="modal fade" id="reset-modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Settings Reset</h5>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Settings Reset</h5>
+                </div>
+                <div class="modal-body">
+                    <div>This will reset all value to default. Do you want to continue ?</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-no" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger btn-yes"
+                        ng-click="$scope.restoreDefaultValues(true)">Reset</button>
+                </div>
             </div>
-            <div class="modal-body">
-                <div>This will reset all value to default. Do you want to continue ?</div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary btn-no" data-dismiss="modal">Cancel</button>
-              <button type="button" class="btn btn-danger btn-yes">Reset</button>
-            </div>
-          </div>
         </div>
-      </div>
+    </div>
     <script src="assets/js/jquery-3.4.1.min.js"></script>
     <script src="assets/js/angular.min.js"></script>
     <script src="assets/js/popper.min.js"></script>
