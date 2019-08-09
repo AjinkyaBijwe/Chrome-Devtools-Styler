@@ -44,24 +44,24 @@ function controller($scope) {
     }
 
     $scope.setTemplate = (items) => {
-        var styleSheet =  `:host-context(.platform-windows) .monospace, 
-        :host-context(.platform-windows) .source-code, 
-        .platform-windows .monospace, .platform-windows .source-code, 
-        :host-context(.platform-mac) .monospace,
-        :host-context(.platform-mac) .source-code, 
-        .platform-mac .monospace, .platform-mac .source-code,
-        :host-context(.platform-linux) .monospace, 
-        :host-context(.platform-linux) .source-code, 
-        .platform-linux .monospace, .platform-linux .source-code, 
+        var styleSheet = 
+        `:host-context(.platform-mac) .monospace,
+        :host-context(.platform-mac) .source-code,
+        .platform-mac .monospace,
+        .platform-mac .source-code,
+        :host-context(.platform-windows) .monospace,
+        :host-context(.platform-windows) .source-code,
+        .platform-windows .monospace,
+        .platform-windows .source-code,
+        :host-context(.platform-linux) .monospace,
+        :host-context(.platform-linux) .source-code,
+        .platform-linux .monospace,
+        .platform-linux .source-code,
         .source-code {
-            font-family: ${items.fontFamily};
+            font-family: ${items.fontFamily} !important;
             font-size: ${items.fontSize}px !important;
             -webkit-text-stroke-width: ${items.textWidthSize}px;
             -webkit-font-smoothing: ${items.fontSmoothing}
-        }
-        
-        table {
-            font-family: ${items.fontFamily} !important;
         }`;
 
         return styleSheet;

@@ -64,7 +64,7 @@ body {
 
 .form-group .form-input {
     font-size: inherit;
-    padding: 9px 9px 9px 15px;
+    padding: 9px;
     border-radius: 2px;
     border-width: 1px;
     border-style: solid;
