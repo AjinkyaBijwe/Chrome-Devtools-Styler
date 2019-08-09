@@ -1,9 +1,7 @@
 var app = angular.module('devtools', []);
-app.controller('devtools-controller', controller)
 
-controller.$inject = ['$scope'];
+app.controller('devtools-controller', ['$scope', ($scope) => {
 
-function controller($scope) {
     $scope.fontSmoothingItems = ['none', 'subpixel-antialiased', 'antialiased', 'unset', 'auto', 'initial'];
 
     $scope.loadDevtools = () => {
@@ -114,4 +112,4 @@ function controller($scope) {
     }
 
     document.addEventListener('DOMContentLoaded', $scope.loadDevtools());
-}
+}]);
