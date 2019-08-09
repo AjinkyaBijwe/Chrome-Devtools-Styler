@@ -8,14 +8,15 @@ function controller($scope) {
 
     $scope.loadDevtools = () => {
         $scope.devtools = chrome.devtools.panels;
-        chrome.storage.sync.get(['fontFamily', 'fontSize', 'textWidthSize', 'fontSmoothing'], (items) => {
-            $scope.devtools.applyStyleSheet($scope.setTemplate(items));
+        $scope.restoreDefaultValues();
+        chrome.storage.sync.get(['fontFamily', 'fontSize', 'textWidthSize', 'fontSmoothing', 'plaformFontFamily', 'plaformFontSize', 'codeLineHeight'], (items) => {
+            if (Object.keys(items).length > 0) {
+                $scope.devtools.applyStyleSheet($scope.setTemplate(items));
+                Object.keys(items).forEach((key) => {
+                    $scope[key] = items[key];
+                });
+            }
             $scope.devtools.create('Devtool Styler', 'assets/img/pantone.png', 'index.html', () => {
-                $('#save-message').hide();
-                $scope.fontFamily = items.fontFamily ? items.fontFamily : '';
-                $scope.fontSize = items.fontSize ? parseInt(items.fontSize) : 12;
-                $scope.textWidthSize = items.textWidthSize ? parseFloat(items.textWidthSize) : 0;
-                $scope.fontSmoothing = items.fontSmoothing ? items.fontSmoothing : 'none';
                 setTimeout(() => {
                     $scope.$apply();
                 });
@@ -23,29 +24,57 @@ function controller($scope) {
         });
     }
 
+    $scope.restoreDefaultValues = (clearStorage) => {
+        $scope.fontFamily = 'monospace';
+        $scope.fontSize = 12;
+        $scope.textWidthSize = 0;
+        $scope.fontSmoothing = 'none';
+        $scope.codeLineHeight = 16;
+        $scope.plaformFontFamily = '';
+        $scope.plaformFontSize = 12;
+        if (clearStorage) {
+            chrome.storage.sync.clear();
+            $scope.showAlert();
+        }
+    }
+
     $scope.setStorage = () => {
-        $('#save-message').hide();
         chrome.storage.sync.set({
             fontFamily: $scope.fontFamily,
             fontSize: $scope.fontSize,
             textWidthSize: $scope.textWidthSize,
-            fontSmoothing: $scope.fontSmoothing
+            fontSmoothing: $scope.fontSmoothing,
+            plaformFontFamily: $scope.plaformFontFamily,
+            plaformFontSize: $scope.plaformFontSize,
+            codeLineHeight: $scope.codeLineHeight
         }, () => {
-            clearTimeout($scope.timeout);
-            $('#save-message').slideDown(300);
-            $scope.timeout = setTimeout(() => {
-                $('#save-message').slideUp(300);
-            }, 3000);
+            $scope.showAlert();
         });
+    }
+
+    $scope.showAlert = () => {
+        $('#save-message').hide();
+        clearTimeout($scope.timeout);
+        $('#save-message').slideDown(300);
+        $scope.timeout = setTimeout(() => {
+            $('#save-message').slideUp(300);
+        }, 3000);
     }
 
     $scope.setFontSmoothing = (item) => {
         $scope.fontSmoothing = item;
     }
 
+    $scope.confirmDialog = () => {
+        $("#reset-modal").modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+    }
+
     $scope.setTemplate = (items) => {
-        var styleSheet = 
-        `:host-context(.platform-mac) .monospace,
+        var styleSheet =
+            `:host-context(.platform-mac) .monospace,
         :host-context(.platform-mac) .source-code,
         .platform-mac .monospace,
         .platform-mac .source-code,
@@ -57,11 +86,28 @@ function controller($scope) {
         :host-context(.platform-linux) .source-code,
         .platform-linux .monospace,
         .platform-linux .source-code,
-        .source-code {
+        .source-code, .CodeMirror pre {
             font-family: ${items.fontFamily} !important;
             font-size: ${items.fontSize}px !important;
             -webkit-text-stroke-width: ${items.textWidthSize}px;
             -webkit-font-smoothing: ${items.fontSmoothing}
+        }
+        .platform-linux, .platform-mac, .platform-windows{
+            font-family: ${items.plaformFontFamily} !important;
+            font-size: ${items.plaformFontSize}px !important;
+        }
+        .CodeMirror-lines { 
+            line-height: ${items.codeLineHeight}px !important;
+        }
+        .cm-breakpoint .CodeMirror-gutter-wrapper .CodeMirror-linenumber, -theme-preserve { 
+            height: ${items.codeLineHeight}px !important;
+            line-height: ${items.codeLineHeight}px !important;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            text-align: right;
+            position: relative;
+            top: -1px !important;
         }`;
 
         return styleSheet;

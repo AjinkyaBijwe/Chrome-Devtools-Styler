@@ -13,38 +13,81 @@
 
 <body ng-controller="devtools-controller">
     <nav class="navbar">
-        <a class="navbar-brand">Devtools Styler</a>
-        <button id="save" class="header-button btn btn-primary" ng-click="setStorage()">Save</button>
+        <div class="navbar-brand">Devtools Styler</div>
+        <div class="d-flex">
+            <button class="header-button reset btn btn-primary" ng-click="confirmDialog()">Reset to Default</button>
+            <button class="header-button btn btn-primary" ng-click="setStorage()">Save</button>
+        </div>
     </nav>
-    <div class="wrapper">
+    <div class="wrapper d-flex justify-content-center flex-wrap">
         <div class="card">
-            <div class="form-group">
-                <label class="form-label">Code Font Name</label>
-                <input class="form-input" type="text" placeholder="Code Font Name" ng-model="fontFamily">
+            <div class="card-title">
+                Code Font Options
             </div>
-            <div class="form-group">
-                <label class="form-label">Font Size : {{fontSize}}px</label>
-                <input type="range" class="custom-range" min="10" max="50" step="1" ng-model="fontSize">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Code Text Stroke Width Size : {{textWidthSize}}px</label>
-                <input type="range" class="custom-range" min="0" max="2" step="0.1" ng-model="textWidthSize">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Code Font Smoothing</label>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
-                        {{fontSmoothing}}
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" ng-repeat="item in fontSmoothingItems" 
-                        ng-click="setFontSmoothing(item)">{{item}}</a>
+            <div class="card-details">
+                <div class="form-group">
+                    <label class="form-label">Code Font Name</label>
+                    <input class="form-input" type="text" placeholder="Code Font Name" ng-model="fontFamily">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Font Size : {{fontSize}}px</label>
+                    <input type="range" class="custom-range" min="10" max="50" step="1" ng-model="fontSize">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Code Text Stroke Width Size : {{textWidthSize}}px</label>
+                    <input type="range" class="custom-range" min="0" max="2" step="0.1" ng-model="textWidthSize">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Code Line Height : {{codeLineHeight}}px</label>
+                    <input type="range" class="custom-range" min="0" max="30" step="1" ng-model="codeLineHeight">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Code Font Smoothing</label>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+                            {{fontSmoothing}}
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" ng-repeat="item in fontSmoothingItems"
+                                ng-click="setFontSmoothing(item)">{{item}}</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="card">
+            <div class="card-title">
+                Devtools Font Options
+            </div>
+            <div class="card-details">
+                <div class="form-group">
+                    <label class="form-label">Devtools Font Name</label>
+                    <input class="form-input" type="text" placeholder="Code Font Name" ng-model="plaformFontFamily">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Devtools Font Size : {{plaformFontSize}}px</label>
+                    <input type="range" class="custom-range" min="10" max="50" step="1" ng-model="plaformFontSize">
+                </div>
+            </div>
+        </div>
     </div>
-    <div id="save-message">Data saved. Please restart browser to see the changes !</div>
+    <div id="save-message" style="display: none;">Data saved. Please restart browser to see the changes !</div>
+    <div class="modal fade" id="reset-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Settings Reset</h5>
+            </div>
+            <div class="modal-body">
+                <div>This will reset all value to default. Do you want to continue ?</div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary btn-no" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-danger btn-yes">Reset</button>
+            </div>
+          </div>
+        </div>
+      </div>
     <script src="assets/js/jquery-3.4.1.min.js"></script>
     <script src="assets/js/angular.min.js"></script>
     <script src="assets/js/popper.min.js"></script>
