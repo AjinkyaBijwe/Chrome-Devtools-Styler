@@ -14,7 +14,7 @@ app.controller('devtools-controller', ['$scope', ($scope) => {
                     $scope[key] = items[key];
                 });
             }
-            $scope.devtools.create('Devtool Styler', 'assets/img/pantone.png', 'index.html', () => {
+            $scope.devtools.create('Devtools Styler', 'assets/img/pantone.png', 'index.html', () => {
                 setTimeout(() => {
                     $scope.$apply();
                 });
@@ -23,12 +23,12 @@ app.controller('devtools-controller', ['$scope', ($scope) => {
     }
 
     $scope.restoreDefaultValues = (clearStorage) => {
-        $scope.fontFamily = 'monospace';
+        $scope.fontFamily = 'Monospace';
         $scope.fontSize = 12;
         $scope.textWidthSize = 0;
         $scope.fontSmoothing = 'none';
         $scope.codeLineHeight = 16;
-        $scope.plaformFontFamily = '';
+        $scope.plaformFontFamily = 'Segoe UI';
         $scope.plaformFontSize = 12;
         if (clearStorage) {
             chrome.storage.sync.clear();
@@ -72,7 +72,7 @@ app.controller('devtools-controller', ['$scope', ($scope) => {
 
     $scope.setTemplate = (items) => {
         var styleSheet =
-            `:host-context(.platform-mac) .monospace,
+        `:host-context(.platform-mac) .monospace,
         :host-context(.platform-mac) .source-code,
         .platform-mac .monospace,
         .platform-mac .source-code,
@@ -84,7 +84,7 @@ app.controller('devtools-controller', ['$scope', ($scope) => {
         :host-context(.platform-linux) .source-code,
         .platform-linux .monospace,
         .platform-linux .source-code,
-        .source-code, .CodeMirror pre {
+        .source-code, .CodeMirror pre, td.webkit-line-content {
             font-family: ${items.fontFamily} !important;
             font-size: ${items.fontSize}px !important;
             -webkit-text-stroke-width: ${items.textWidthSize}px;
@@ -97,7 +97,7 @@ app.controller('devtools-controller', ['$scope', ($scope) => {
         .CodeMirror-lines { 
             line-height: ${items.codeLineHeight}px !important;
         }
-        .cm-breakpoint .CodeMirror-gutter-wrapper .CodeMirror-linenumber, -theme-preserve { 
+        .cm-breakpoint .CodeMirror-gutter-wrapper .CodeMirror-linenumber { 
             height: ${items.codeLineHeight}px !important;
             line-height: ${items.codeLineHeight}px !important;
             display: flex;
