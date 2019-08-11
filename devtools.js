@@ -64,10 +64,15 @@ app.controller('devtools-controller', ['$scope', ($scope) => {
     }
 
     $scope.confirmDialog = () => {
-        $("#reset-modal").modal({
+        $('#reset-modal').modal({
             backdrop: 'static',
             keyboard: false
         });
+
+        $('.btn-yes').click(() => {
+            $scope.restoreDefaultValues(true);
+            $('#reset-modal').modal('hide');
+        })
     }
 
     $scope.setTemplate = (items) => {

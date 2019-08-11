@@ -1,6 +1,6 @@
 {
     "name": "Chrome Devtools Styler",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "description": "Change Chrome Devtool Styles",
     "devtools_page": "index.html",
     "manifest_version": 2,
