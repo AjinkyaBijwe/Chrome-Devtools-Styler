@@ -23,12 +23,12 @@ app.controller('devtools-controller', ['$scope', ($scope) => {
     }
 
     $scope.restoreDefaultValues = (clearStorage) => {
-        $scope.fontFamily = 'Monospace';
+        $scope.fontFamily = '';
         $scope.fontSize = 12;
         $scope.textWidthSize = 0;
         $scope.fontSmoothing = 'none';
         $scope.codeLineHeight = 16;
-        $scope.plaformFontFamily = 'Segoe UI';
+        $scope.plaformFontFamily = '';
         $scope.plaformFontSize = 12;
         if (clearStorage) {
             chrome.storage.sync.clear();
