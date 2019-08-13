@@ -27,7 +27,7 @@ app.controller('devtools-controller', ['$scope', ($scope) => {
         $scope.fontSize = 12;
         $scope.textWidthSize = 0;
         $scope.fontSmoothing = 'none';
-        $scope.codeLineHeight = 16;
+        $scope.codeLineHeight = 15;
         $scope.plaformFontFamily = '';
         $scope.plaformFontSize = 12;
         if (clearStorage) {
@@ -89,7 +89,9 @@ app.controller('devtools-controller', ['$scope', ($scope) => {
         :host-context(.platform-linux) .source-code,
         .platform-linux .monospace,
         .platform-linux .source-code,
-        .source-code, .CodeMirror pre, td.webkit-line-content {
+        .CodeMirror pre,
+        #console-messages .source-code,
+        .stack-preview-container {
             font-family: ${items.fontFamily} !important;
             font-size: ${items.fontSize}px !important;
             -webkit-text-stroke-width: ${items.textWidthSize}px;
@@ -111,6 +113,41 @@ app.controller('devtools-controller', ['$scope', ($scope) => {
             text-align: right;
             position: relative;
             top: -1px !important;
+        }
+        .tree-outline-disclosure .tree-outline > li, 
+        .tree-outline-disclosure.tree-outline-disclosure-hide-overflow .tree-outline li,
+        .elements-disclosure .elements-tree-outline.source-code li,
+        .tree-outline-disclosure .tree-outline.hide-selection-when-blurred.source-code.object-properties-section li {
+            line-height: ${items.codeLineHeight}px !important;
+            min-height: ${items.codeLineHeight}px !important;
+            font-size: ${items.fontSize}px !important;
+            -webkit-text-stroke-width: ${items.textWidthSize}px;
+            -webkit-font-smoothing: ${items.fontSmoothing}
+        }
+        .elements-disclosure .elements-tree-outline.source-code li.parent::before{
+            -webkit-mask-position-y: 0.14em !important;
+            cursor: pointer;
+        }
+        .elements-disclosure .elements-tree-outline.source-code li.parent.expanded::before{
+            -webkit-mask-position-y: 0.05em !important;
+        }
+        .tree-outline-disclosure .tree-outline.tree-outline-dense > .parent,
+        .tree-outline-disclosure .tree-outline.tree-outline-dense .header-name {
+            -webkit-text-stroke-width: 0.1px;
+            font-weight: normal;
+        }
+        .tree-outline-disclosure .tree-outline.tree-outline-dense .header-name {
+            color: #bb0000;
+            font-size: ${items.fontSize}px !important;
+        }
+        .tree-outline-disclosure .tree-outline.tree-outline-dense > .parent{
+            color: #252525;
+        }
+        .tree-outline-disclosure .tree-outline.tree-outline-dense li.expanded .header-toggle {
+            margin-left: 15px;
+        }
+        .tree-outline-disclosure .tree-outline.hide-selection-when-blurred.source-code.object-properties-section .name-and-value {
+            line-height: inherit;
         }`;
 
         return styleSheet;
