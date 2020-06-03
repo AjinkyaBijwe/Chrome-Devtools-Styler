@@ -1,13 +1,14 @@
 var app = angular.module('devtools', []);
 
 app.controller('devtools-controller', ['$scope', ($scope) => {
-
+    
     $scope.fontSmoothingItems = ['none', 'subpixel-antialiased', 'antialiased', 'unset', 'auto', 'initial'];
 
     $scope.loadDevtools = () => {
         $scope.devtools = chrome.devtools.panels;
         $scope.restoreDefaultValues();
-        chrome.storage.sync.get(['fontFamily', 'fontSize', 'textWidthSize', 'fontSmoothing', 'plaformFontFamily', 'plaformFontSize', 'codeLineHeight'], (items) => {
+        chrome.storage.sync.get(['fontFamily', 'fontSize', 'fontWeight', 'textWidthSize', 'fontSmoothing', 'codeLineHeight',
+			'plaformFontFamily', 'plaformFontSize', 'plaformFontWeight'], (items) => {
             if (Object.keys(items).length > 0) {
                 $scope.devtools.applyStyleSheet($scope.setTemplate(items));
                 Object.keys(items).forEach((key) => {
@@ -21,15 +22,28 @@ app.controller('devtools-controller', ['$scope', ($scope) => {
             });
         });
     }
+	
+	$scope.saveSettings = (event) => {
+		if (event.ctrlKey || event.metaKey) {
+			switch (String.fromCharCode(event.which).toLowerCase()) {
+				case 's':
+					event.preventDefault();
+					$scope.setStorage();
+				break;
+			}
+		}
+	}
 
     $scope.restoreDefaultValues = (clearStorage) => {
         $scope.fontFamily = '';
         $scope.fontSize = 12;
+		$scope.fontWeight = 400;
         $scope.textWidthSize = 0;
         $scope.fontSmoothing = 'none';
         $scope.codeLineHeight = 15;
         $scope.plaformFontFamily = '';
         $scope.plaformFontSize = 12;
+		$scope.plaformFontWeight = 400;
         if (clearStorage) {
             chrome.storage.sync.clear();
             $scope.showAlert();
@@ -40,11 +54,13 @@ app.controller('devtools-controller', ['$scope', ($scope) => {
         chrome.storage.sync.set({
             fontFamily: $scope.fontFamily,
             fontSize: $scope.fontSize,
+			fontWeight: $scope.fontWeight,
             textWidthSize: $scope.textWidthSize,
             fontSmoothing: $scope.fontSmoothing,
+			codeLineHeight: $scope.codeLineHeight,
             plaformFontFamily: $scope.plaformFontFamily,
             plaformFontSize: $scope.plaformFontSize,
-            codeLineHeight: $scope.codeLineHeight
+			plaformFontWeight: $scope.plaformFontWeight
         }, () => {
             $scope.showAlert();
         });
@@ -95,11 +111,13 @@ app.controller('devtools-controller', ['$scope', ($scope) => {
             font-family: ${items.fontFamily} !important;
             font-size: ${items.fontSize}px !important;
             -webkit-text-stroke-width: ${items.textWidthSize}px;
-            -webkit-font-smoothing: ${items.fontSmoothing}
+            -webkit-font-smoothing: ${items.fontSmoothing};
+			font-weight: ${items.fontWeight} !important;
         }
         .platform-linux, .platform-mac, .platform-windows{
             font-family: ${items.plaformFontFamily} !important;
             font-size: ${items.plaformFontSize}px !important;
+			font-weight: ${items.plaformFontWeight} !important;
         }
         .CodeMirror-lines { 
             line-height: ${items.codeLineHeight}px !important;
@@ -111,9 +129,10 @@ app.controller('devtools-controller', ['$scope', ($scope) => {
             justify-content: center;
             flex-direction: column;
             text-align: right;
-            position: relative;
-            top: -1px !important;
         }
+		.CodeMirror-gutter-elt{
+			top : 0px !important;
+		}
         .tree-outline-disclosure .tree-outline > li, 
         .tree-outline-disclosure.tree-outline-disclosure-hide-overflow .tree-outline li,
         .elements-disclosure .elements-tree-outline.source-code li,

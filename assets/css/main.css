@@ -51,7 +51,7 @@ body {
 }
 
 .navbar .navbar-brand {
-    font-size: 18px;
+    font-size: 16px;
     color: #fff;
     font-weight: 400;
 }
@@ -99,7 +99,7 @@ button.close{
     height: 45px;
     margin: 0px;
     color: #ffffff;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 21px;
     padding: 12px 15px;
     border-radius: 4px 4px 0px 0px;
@@ -125,7 +125,7 @@ button.close{
 }
 
 .form-group {
-    font-size: 14px;
+    font-size: 13px;
     margin-bottom: 15px;
 }
 
